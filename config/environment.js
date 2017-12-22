@@ -7,6 +7,7 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
+    nasa_api_key: '6dWdXtuFW7tEPgiWYVFYf3kUxwgU77sARhf5aRtC'
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
