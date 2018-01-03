@@ -7,7 +7,20 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
-    nasa_api_key: '6dWdXtuFW7tEPgiWYVFYf3kUxwgU77sARhf5aRtC'
+    apiKey: '6dWdXtuFW7tEPgiWYVFYf3kUxwgU77sARhf5aRtC',
+    apiBaseUrl: 'https://api.nasa.gov/mars-photos/api/v1',
+    roverNames: ['spirit', 'opportunity', 'curiosity'],
+    roverCameras: {
+      fhaz: 'Front Hazard Avoidance Camera',
+      rhaz: 'Rear Hazard Avoidance Camera',
+      mast: 'Mast Camera',
+      chemcam: 'Chemistry and Camera Complex',
+      mahli: 'Mars Hand Lens Imager',
+      mardi: 'Mars Descent Imager',
+      navcam: 'Navigation Camera',
+      pancam: 'Panoramic Camera',
+      minites: 'Miniature Thermal Emission Spectrometer (Mini-TES)'
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -27,10 +40,10 @@ module.exports = function(environment) {
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.APP.LOG_ACTIVE_GENERATION = true;
+    ENV.APP.LOG_TRANSITIONS = true;
+    ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 
   if (environment === 'test') {

@@ -1,5 +1,34 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+<h1>This is the main page</h1>
+
+{{!-- <h3>{{roversMetadata}}</h3>
+<ul>
+	{{#each metadata in |roversMetaData|}}
+		<li>Name: {{metadata.name}}</li>
+	{{/each}}
+</ul> --}}
+{{!-- <h3>Rover 1: {{ manifests[0].name}}</h3> --}}
+<h3>Mars Rovers</h3>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Landing date</th>
+		<th>Launch date</th>
+		<th>status</th>
+		<th>max sol</th>
+		<th>max date</th>
+		<th>total photos</th>
+	</tr>
+	{{#each roverManifests as |roverManifest|}}
+		<tr>
+			<td>{{roverManifest.name}}</td>
+			<td>{{roverManifest.landingDate}}</td>
+			<td>{{roverManifest.launchDate}}</td>
+			<td>{{roverManifest.status}}</td>
+			<td>{{roverManifest.maxSol}}</td>
+			<td>{{roverManifest.maxDate}}</td>
+			<td>{{roverManifest.totalPhotos}}</td>
+		</tr>
+	{{/each}}
+</table>
 
 {{outlet}}
