@@ -8,27 +8,44 @@
 </ul> --}}
 {{!-- <h3>Rover 1: {{ manifests[0].name}}</h3> --}}
 <h3>Mars Rovers</h3>
-<table>
-	<tr>
-		<th>Name</th>
-		<th>Landing date</th>
-		<th>Launch date</th>
-		<th>status</th>
-		<th>max sol</th>
-		<th>max date</th>
-		<th>total photos</th>
-	</tr>
-	{{#each roverManifests as |roverManifest|}}
+{{!-- {{rover-selector roverNames=displayableRoverNames}} --}}
+<select onchange={{action "setCurrentRover" value="target.value"}}>
+ <option disabled selected>ROVER</option>
+ 		{{#each displayableRoverNames as |roverName|}}
+ 			<option value={{roverName}}>{{roverName}}</option>
+ 		{{/each}}
+</select>
+
+{{!-- <p>Selected rover name: {{selectedRoverName}}</p> --}}
+{{#if showRover }}
+	<table>
 		<tr>
-			<td>{{roverManifest.name}}</td>
-			<td>{{roverManifest.landingDate}}</td>
-			<td>{{roverManifest.launchDate}}</td>
-			<td>{{roverManifest.status}}</td>
-			<td>{{roverManifest.maxSol}}</td>
-			<td>{{roverManifest.maxDate}}</td>
-			<td>{{roverManifest.totalPhotos}}</td>
+			<th>Landing date</th>
+			<th>Launch date</th>
+			<th>status</th>
+			<th>max sol</th>
+			<th>max date</th>
+			<th>total photos</th>
 		</tr>
-	{{/each}}
-</table>
+		<tr>
+			<td>{{currentRover.landingDate}}</td>
+			<td>{{currentRover.launchDate}}</td>
+			<td>{{currentRover.status}}</td>
+			<td>{{currentRover.maxSol}}</td>
+			<td>{{currentRover.maxDate}}</td>
+			<td>{{currentRover.totalPhotos}}</td>
+		</tr>
+	</table>
+{{/if}}
+
+{{#if showRover }}
+	<h3>Cameras</h3>
+	<select>
+		{{#each currentRover.cameras as |camera|}}
+			<option>{{camera.name}}</option>
+			{{!-- <option>{{camera.full_name}}</option> --}}
+		{{/each}}
+	</select>
+{{/if}}
 
 {{outlet}}
