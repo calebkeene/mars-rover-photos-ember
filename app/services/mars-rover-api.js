@@ -3,12 +3,9 @@ import ENV from "../config/environment";
 import Rover from '../models/rover';
 
 export default Service.extend({
-	description: "Useful service that does the API calls so the controller doesn't have to",
-
 	init: function() {
 		this._super(...arguments);
 		console.log('mars-rover-api service initialised')
-		this.set('serviceName', 'I am a really cool service!');
 	},
 
 	_fetchRover: function(roverName) {
@@ -30,8 +27,6 @@ export default Service.extend({
       		totalPhotos: responseData['total_photos'],
       		cameras: responseData['cameras']
       	});
-
-      	console.log(rover);
       	resolve(rover);
       });
 		});
