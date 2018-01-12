@@ -5,15 +5,10 @@ import RoverApiService from '../services/mars-rover-api';
 
 export default Controller.extend({
 	init: function() {
-		this._super();
-		console.log("initialising application controller")
-		// this._fetchAllRovers().then( result => {
-		// 	this.set('rovers', result);
-		// })
+		this._super(...arguments);
 		this.set('displayableRoverNames', ENV.roverNames);
 		this.set('rovers', {});
 		this.set('currentRover', null);
-		this.set('serviceName', this.get('marsRoverApi').serviceName);
 	},
 
 	marsRoverApi: Ember.inject.service(),
