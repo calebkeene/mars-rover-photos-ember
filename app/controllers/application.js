@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import ENV from "../config/environment";
 import Rover from '../models/rover';
+import RoverApiService from '../services/mars-rover-api';
 
 export default Controller.extend({
 	init: function() {
@@ -11,65 +12,52 @@ export default Controller.extend({
 		// })
 		this.set('displayableRoverNames', ENV.roverNames);
 		this.set('rovers', {});
-		this.set('currentRover', '');
+		this.set('currentRover', null);
+		this.set('serviceName', this.get('marsRoverApi').serviceName);
 	},
+
+	marsRoverApi: Ember.inject.service(),
 
 	showRover: false,
 
 	actions: {
 		setCurrentRover: function(roverName) {
 
-			if(this.get('rovers')[roverName]){
-				console.log('already fetched rover, setting currentRover and returning');
+			if (this.get('rovers')[roverName]) {
 				this.set('currentRover', this.get('rovers')[roverName]);
-				console.log('currentRover set to: ' + this.get('currentRover').name);
+				this._setDatePicker();
 				return;
 			}
-			this._fetchRover(roverName, null).then( result => {
-				console.log('result name: ' + result.name);
+
+			this.get('marsRoverApi')._fetchRover(roverName).then( result => {
 				this._pushToRovers(roverName, result);
-				
 				this.set('currentRover', this.get('rovers')[roverName]);
-				console.log('set currentRover');
-				console.log('name: ' + this.get('currentRover').name);
+				this._setDatePicker();
 
 				if(!$.isEmptyObject(this.get('rovers'))){
-					console.log("this.rovers is not empty");
 					this.set('showRover', true);
 				}
-
 			});
+		},
+
+		setCurrentCamera: function(cameraShortName) {
+			let rover = this.get('currentRover');
+			this.set('currentCamera', rover.cameraByName(cameraShortName));
 		}
 	},
 
-	_fetchRover: function(roverName, previousResult) {
-		let promise = new Promise((resolve, reject) => {
-			Ember.$.ajax({
-        url: `${ENV.apiBaseUrl}/rovers/${roverName}?api_key=${ENV.apiKey}`,
-        type: 'GET',
-        dataType: 'json'
-      }).then(response => {
-      	let responseData = response['rover'];
+	_dateRange: function() {
+		let rover = this.get('currentRover');
+		let minYear = new Date(rover.landingDate).getFullYear();
+		let maxYear = new Date(rover.maxDate).getFullYear();
+		return [minYear, maxYear];
+	},
 
-      	let rover = Rover.create({
-      		name: responseData['name'],
-      		landingDate: responseData['landing_date'],
-      		launchDate: responseData['launch_date'],
-      		status: responseData['status'],
-      		maxSol: responseData['max_sol'],
-      		maxDate: responseData['max_date'],
-      		totalPhotos: responseData['total_photos'],
-      		cameras: responseData['cameras']
-      	});
-
-      	console.log(rover);
-      	console.log("successfully built Rover!, name => " + rover.name);
-
-      	resolve(rover);
-      });
-		});
-
-		return promise;
+	_setDatePicker: function(self) {		
+		this.set('datePickerYearRange', this._dateRange());
+		this.set('currentDate', this.get('currentRover').maxDate);
+		console.log('datePickerYearRange set => ' + this.get('datePickerYearRange'));
+		console.log('currentDate set => ' + this.get('currentDate'));
 	},
 
 	_pushToRovers: function(roverName, rover) {

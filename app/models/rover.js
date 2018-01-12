@@ -12,9 +12,16 @@
 // });
 
 const Rover = Ember.Object.extend({
-  init() {
-    console.log(`initialising Rover: ${this.get('name')}`);
+  cameraByName: function(cameraName) {
+    let cameras = this.get('cameras');
+    for(var i = 0; i < cameras.length; i++) {
+      let camera = cameras[i];
+      if(camera['name'] === cameraName) {
+        return { shortName: camera['name'], fullName: camera['full_name'] };
+      }
+    }
   }
+
 });
 
 export default Rover;

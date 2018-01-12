@@ -1,0 +1,7 @@
+{
+  "name": "mars-rover-photos-ember",
+  "dependencies": {
+    "pikaday": "^1.6.1",
+    "moment": "^2.20.1"
+  }
+}

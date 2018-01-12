@@ -9,7 +9,7 @@
 {{!-- <h3>Rover 1: {{ manifests[0].name}}</h3> --}}
 <h3>Mars Rovers</h3>
 {{!-- {{rover-selector roverNames=displayableRoverNames}} --}}
-<select onchange={{action "setCurrentRover" value="target.value"}}>
+<select onchange={{action 'setCurrentRover' value='target.value'}}>
  <option disabled selected>ROVER</option>
  		{{#each displayableRoverNames as |roverName|}}
  			<option value={{roverName}}>{{roverName}}</option>
@@ -40,12 +40,15 @@
 
 {{#if showRover }}
 	<h3>Cameras</h3>
-	<select>
+	<select onchange={{action 'setCurrentCamera' value='target.value'}}>
 		{{#each currentRover.cameras as |camera|}}
 			<option>{{camera.name}}</option>
 			{{!-- <option>{{camera.full_name}}</option> --}}
 		{{/each}}
 	</select>
+	<p>current camera: {{currentCamera.fullName}}</p>
+	<h3>Date</h3>
+	{{date-picker date=currentDate valueFormat='YYYY-MM-DD' yearRange=datePickerYearRange}}
 {{/if}}
 
 {{outlet}}
